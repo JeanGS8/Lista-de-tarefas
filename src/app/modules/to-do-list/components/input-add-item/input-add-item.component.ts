@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, signal, ViewChild } from '@angular/core';
 import { IListItem } from '../../interfaces/IListItem.interface';
 import { CommonModule } from '@angular/common';
 
@@ -7,14 +7,17 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './input-add-item.component.html',
-  styleUrl: './input-add-item.component.scss'
+  styleUrl: './input-add-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputAddItemComponent {
-  @Input({required: true})
-  public inputListItems: IListItem[] = [];
 
-  @Output()
-  public outputAddListItems = new EventEmitter<IListItem>();
+  listItems = signal<IListItem[]>([]);
+  @Input({required: true}) set inputListItems(itens: IListItem[]){
+    this.listItems.set(itens);
+  };
+
+  @Output() public outputAddListItems = new EventEmitter<IListItem>();
 
   private _cdr = inject(ChangeDetectorRef);
 

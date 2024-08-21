@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { InputAddItemComponent } from '../../components/input-add-item/input-add-item.component';
 import { IListItem } from '../../interfaces/IListItem.interface';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,8 @@ import Swal from 'sweetalert2';
     InputListItemComponent
   ],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListComponent {
   public addItem = signal(true);

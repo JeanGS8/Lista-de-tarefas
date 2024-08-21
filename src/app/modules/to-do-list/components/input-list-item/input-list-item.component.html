@@ -1,4 +1,4 @@
-@for(item of inputListItems; track item.id) {
+@for(item of listItems(); track item.id) {
   <label class="input-label-text" [for]="item.id">
     <input
       type="checkbox"

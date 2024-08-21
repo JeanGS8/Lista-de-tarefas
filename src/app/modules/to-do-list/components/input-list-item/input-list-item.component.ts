@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { IListItem } from '../../interfaces/IListItem.interface';
 import { CommonModule } from '@angular/common';
 
@@ -7,12 +7,15 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './input-list-item.component.html',
-  styleUrl: './input-list-item.component.scss'
+  styleUrl: './input-list-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputListItemComponent {
   
-  @Input({required: true})
-  public inputListItems: IListItem[] = [];
+  listItems = signal<IListItem[]>([]);
+  @Input({required: true}) set inputListItems(itens: IListItem[]) {
+    this.listItems.set(itens);
+  };
 
   @Output()
   public outputUpdateItemCheckbox = new EventEmitter<{
